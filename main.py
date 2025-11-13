@@ -55,7 +55,5 @@ def fence_cipher_decryption(request:Request):
     return {"decrypted_text": decrypted_text}
 
 
-if __name__ == "__main__":
-    uvicorn.run(api, host="localhost", port=8000)
 
 

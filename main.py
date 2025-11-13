@@ -4,6 +4,11 @@ import json
 import ciphers
 import uvicorn
 
+class Request(BaseModel):
+    text: str
+    offset: int | None 
+    mode: str | None  #"encrypt" or "decrypt"
+
 api = FastAPI()
 
 @api.get("/")
@@ -22,12 +27,14 @@ def save_name(name:str):
 
 
 @api.post("/caesar")
-def caesar_cipher(offset):
-    body = {"text": str,
-           "offset": int,
-           "mode": "encrypt" or "decrypt"
-    }
-    return {"encrypted_text":""} or {"decrypted_text":""}
+def caesar_cipher(request:Request):
+    if request["mode"] == "encrypt":
+        encrypted_text = ciphers.encode_ceaser(decode=request["text"], offset=request["offset"])
+        return {"encrypted_text": encrypted_text}
+    else:
+        decrypted_text = ciphers.decode_ceaser(encode=request["text"], offset=request["offset"])
+        return {"decrypted_text":decrypted_text}
+
 
 @api.get("/fence/encrypt?text={text}")
 def fence_cipher_encryption():
@@ -35,10 +42,11 @@ def fence_cipher_encryption():
 
 @api.post("/fence/decrypt")
 def fence_cipher_decryption():
-    body = {"text":str
-    }
     return {"decrypted":""}
 
 
+
+if __name__ == "__main__":
+    uvicorn.run(api, host="localhost", port=8000)
 
 

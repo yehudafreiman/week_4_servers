@@ -4,6 +4,7 @@ def encode_ceaser(decode, offset):
     decode = decode.lower()
     for i in decode:
         if i in alphabet:
+            # Changes the letter to an offset of x letters forward
             encode += alphabet[alphabet.index(i) + offset]
         else:
             encode += i
@@ -16,6 +17,7 @@ def decode_ceaser(encode, offset):
     encode = encode.lower()
     for i in encode:
         if i in alphabet:
+            # Changes the letter to an offset of x letters back
             decode += alphabet[alphabet.index(i) - offset]
         else:
             decode += i
@@ -29,18 +31,21 @@ def encode_fence(decode):
     decode = decode.replace(" ", "")
     for i,l in enumerate(decode):
         if l in alphabet:
+            # If the index of the letter is even put into the ciphertext
             if i % 2 == 0:
                 encode += l
             else:
                 continue
     for i,l in enumerate(decode):
         if l in alphabet:
+            # If the index of the odd letter is inserted into the ciphertext
             if i % 2 != 0:
                 encode += l
             else:
                 continue
     return encode.upper()
 
+# not completed
 def decode_fence(encode):
     alphabet = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
     decode = ''
